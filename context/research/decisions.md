@@ -16,6 +16,6 @@ Format: decyzja, uzasadnienie, status (**ustalone** | **rekomendacja** | **otwar
 | D10 | Poza MVP: kalendarz, godzina wyjścia, moduł ekranu, sport, integracje komunikatorów | cztery osobne problemy, ryzyko rozrostu | ustalone |
 | D11 | Zasada zakresu: nowy pomysł trafia do NOT NOW | ochrona MVP | ustalone |
 | D12 | Pozycjonowanie: „kiedy jest za dużo naraz”, ADHD jako kontekst projektowy, nie hasło | ryzyko wyrobu medycznego i danych szczególnych | rekomendacja |
-| D13 | Termin certyfikacji (4.11 / 6.12 / 10.01) | 4.11 ma szansę na wyróżnienie i Demo Day, ale repo ma dziś tylko README | **otwarte** |
-| D14 | Skille kursu nie trafiają do publicznego repo bez sprawdzenia zasad kursu | materiały płatne | **otwarte** |
-| D15 | Zakres dodatkowy (Nie ogarniam, PWA, Do odpisania) | zależy od D13 | **otwarte** |
+| D13 | Termin certyfikacji: 6.12 | 4.11 nierealne (2 dni, repo ma tylko dokumentację); 10.01 zostaje jako zapas | ustalone |
+| D14 | Żadne materiały kursu nie trafiają do publicznego repo: `.claude/skills/`, manifest CLI i `CLAUDE.local.md` (reguły lekcji) są w `.gitignore`; `10x get`/`sync` uruchamiamy z `--no-course-rules`, żeby CLI nie dopisywał reguł do `CLAUDE.md` | materiały płatne; przyjmujemy, że kurs nie pozwala ich udostępniać | ustalone |
+| D15 | Zakres dodatkowy (Nie ogarniam, PWA, Do odpisania) | D13 = 6.12 daje miejsce na część zakresu dodatkowego; rozstrzygnąć w `/10x-shape` | **otwarte** |
