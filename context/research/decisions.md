@@ -18,4 +18,4 @@ Format: decyzja, uzasadnienie, status (**ustalone** | **rekomendacja** | **otwar
 | D12 | Pozycjonowanie: „kiedy jest za dużo naraz”, ADHD jako kontekst projektowy, nie hasło | ryzyko wyrobu medycznego i danych szczególnych | rekomendacja |
 | D13 | Termin certyfikacji: 6.12 | 4.11 nierealne (2 dni, repo ma tylko dokumentację); 10.01 zostaje jako zapas | ustalone |
 | D14 | Żadne materiały kursu nie trafiają do publicznego repo: `.claude/skills/`, manifest CLI i `CLAUDE.local.md` (reguły lekcji) są w `.gitignore`; `10x get`/`sync` uruchamiamy z `--no-course-rules`, żeby CLI nie dopisywał reguł do `CLAUDE.md` | materiały płatne; przyjmujemy, że kurs nie pozwala ich udostępniać | ustalone |
-| D15 | Zakres dodatkowy (Nie ogarniam, PWA, Do odpisania) | D13 = 6.12 daje miejsce na część zakresu dodatkowego; rozstrzygnąć w `/10x-shape` | **otwarte** |
+| D15 | Zakres dodatkowy: „Nie ogarniam”, manifest PWA i „Do odpisania” jako nice-to-have po rdzeniu (po zielonym CI i wdrożeniu) | rozstrzygnięte w `/10x-shape` (FR-016–018 w `prd.md`) | ustalone |
