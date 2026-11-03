@@ -2,7 +2,7 @@
 project: "Trzy"
 context_type: greenfield
 created: 2026-11-02
-updated: 2026-11-02
+updated: 2026-11-03
 checkpoint:
   current_phase: 8
   phases_completed: [1, 2, 3, 4, 5, 6, 7]
@@ -79,9 +79,9 @@ Zakres dodatkowy po rdzeniu (po zielonym CI i wdrożeniu): „Nie ogarniam”, m
 - Ludzie wracają po przerwie: tester po kilku dniach nieobecności wraca i układa nowy plan.
 
 ### Guardrails
-- Nigdy więcej niż 3 pozycje w „Dzisiaj”, niezależnie od tego, co zaproponuje model.
+- Nigdy więcej niż 3 pozycje w „Dzisiaj”, niezależnie od treści propozycji.
 - Żadnej winy ani zaległości: brak liczników, czerwonych znaczników, streaków i komunikatów „X dni nieobecności”.
-- Prywatność zrzutów: treść nie trafia do logów; do modelu nie trafia e-mail ani identyfikatory; użytkownik usuwa wszystkie swoje dane jednym przyciskiem.
+- Prywatność zrzutów: treść nie trafia do logów; do zewnętrznego przetwarzania propozycji nie trafia e-mail ani identyfikatory; użytkownik usuwa wszystkie swoje dane jednym przyciskiem.
 
 ## Product framing
 
@@ -145,7 +145,7 @@ Acknowledged on 2026-11-02: 5-week MVP requires sustained dedication; user accep
   > Socrates: Counter-argument considered: "14 dni to arbitralny próg." Resolution: 14 dni zostaje na MVP; próg trafia do Open Questions do weryfikacji na testerach.
 - FR-014: Użytkownik może usunąć wszystkie swoje dane jednym przyciskiem, z jednym potwierdzeniem. Priority: must-have
   > Socrates: Counter-argument considered: "przypadkowe kliknięcie usuwa wszystko." Resolution: dodane jedno potwierdzenie, bez wieloetapowego procesu.
-- FR-015: Użytkownik może przed pierwszym użyciem zobaczyć, co trafia do modelu, i wyrazić zgodę. Priority: must-have
+- FR-015: Użytkownik może przed pierwszym użyciem zobaczyć, jakie dane są przekazywane do zewnętrznego przetwarzania propozycji, i wyrazić zgodę. Priority: must-have
   > Socrates: Counter-argument considered and rejected; it stands as written.
 
 ### Zakres dodatkowy (po rdzeniu)
