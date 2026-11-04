@@ -30,6 +30,7 @@ Node 26 (`.nvmrc`). `npm run dev` (serwer na :4321), `npm run lint`, `npx astro 
 - Endpointy API walidują wejście schematem zod (`astro/zod`).
 - Sekrety czytaj przez `astro:env/server`; nowe zmienne deklaruj w `env.schema` w `astro.config.mjs`. Lokalnie `.env` i `.dev.vars` (gitignorowane, wzór: `.env.example`).
 - Migracje w `supabase/migrations/YYYYMMDDHHmmss_opis.sql`; każda nowa tabela ma RLS `user_id = auth.uid()`.
+
 ## Model danych i stack
 
 Model `items` (type oddzielony od bucket, `day_key` z granicą dnia 4:00 Europe/Warsaw): `context/research/idea-brief.md`. Warstwa AI za adapterem `AIProvider` (`OpenRouterProvider`, `MockProvider`); testy nie wołają prawdziwego LLM. Vitest i Playwright nie są jeszcze zainstalowane — dodaj je, zanim napiszesz pierwszy test.
