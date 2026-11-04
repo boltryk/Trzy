@@ -6,11 +6,11 @@ Trzy to asystent dnia: „Masz dziś trzy rzeczy. Reszta może poczekać.” Uż
 
 ## Reguły, których nie wolno łamać
 
-1. **Maksymalnie 3 pozycje w „Dzisiaj”. Egzekwuje to kod, nie prompt.** Limit nie jest konfigurowalny. Odpowiedź modelu z więcej niż 3 pozycjami jest obcinana lub odrzucana przez walidator.
+1. **Maksymalnie 3 pozycje w „Dzisiaj”. Egzekwuje to kod, nie prompt.** Limit nie jest konfigurowalny. Walidator obcina propozycję do 3 pozycji, zostawiając najpierw pozycje z `is_hard` na dziś lub jutro; nadmiarowe pozycje trafiają do „Później”.
 2. **Brak winy.** Żadnych czerwonych znaczników, liczników zaległości, „X dni nieobecności”, streaków ani grywalizacji. Niezrobione pozycje wracają do „Później” po resecie dnia.
 3. **AI proponuje, człowiek zatwierdza.** Nic nie jest zapisane ani wysłane bez potwierdzenia użytkownika.
 4. **Odpowiedź modelu to dane niezaufane.** Walidacja schematu, potem reguły biznesowe, dopiero potem UI. Każda pozycja ma `source_text`, który musi występować w zrzucie użytkownika. Pozycja bez pokrycia w tekście jest odrzucana.
-5. **Aplikacja działa bez LLM.** Przy błędzie, timeoucie lub niedostępności modelu użytkownik nie traci wpisanego tekstu i może ułożyć listy ręcznie.
+5. **Aplikacja działa bez LLM.** Przy błędzie, timeoucie lub niedostępności modelu tekst zrzutu zostaje zapisany do ponowienia, a użytkownik może ręcznie dodać do 3 pozycji na dziś (FR-009). Pełnego ręcznego układania list nie budujemy.
 6. **Prywatność.** Treść zrzutów nigdy nie trafia do logów ani narzędzi do śledzenia błędów. Do modelu idą tylko zrzut i tytuły z „Później”, bez e-maila i identyfikatorów. Użytkownik może usunąć wszystkie swoje dane jednym przyciskiem.
 7. **Pozycja z twardym terminem (`is_hard`) nie spada do „Później” bez jawnego potwierdzenia.**
 
@@ -27,11 +27,9 @@ Node 26 (`.nvmrc`). `npm run dev` (serwer na :4321), `npm run lint`, `npx astro 
 ## Struktura i konwencje
 
 - Strony i API w `src/pages/` (`api/` dla endpointów), logika i serwisy w `src/lib/`, komponenty UI shadcn w `src/components/ui/`, ochrona tras w `src/middleware.ts` (`PROTECTED_ROUTES`).
-- Endpointy API: eksporty `GET`/`POST` wielkimi literami, `export const prerender = false`, walidacja wejścia schematem zod.
+- Endpointy API walidują wejście schematem zod (`astro/zod`).
 - Sekrety czytaj przez `astro:env/server`; nowe zmienne deklaruj w `env.schema` w `astro.config.mjs`. Lokalnie `.env` i `.dev.vars` (gitignorowane, wzór: `.env.example`).
 - Migracje w `supabase/migrations/YYYYMMDDHHmmss_opis.sql`; każda nowa tabela ma RLS `user_id = auth.uid()`.
-- Klasy Tailwind łącz przez `cn()` z `src/lib/utils.ts`.
-
 ## Model danych i stack
 
 Model `items` (type oddzielony od bucket, `day_key` z granicą dnia 4:00 Europe/Warsaw): `context/research/idea-brief.md`. Warstwa AI za adapterem `AIProvider` (`OpenRouterProvider`, `MockProvider`); testy nie wołają prawdziwego LLM. Vitest i Playwright nie są jeszcze zainstalowane — dodaj je, zanim napiszesz pierwszy test.
