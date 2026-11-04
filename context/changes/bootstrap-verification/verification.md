@@ -22,7 +22,7 @@ project_name: trzy
 hints:
   language_family: js
   team_size: solo
-  deployment_target: cloudflare-pages
+  deployment_target: cloudflare-workers
   ci_provider: github-actions
   ci_default_flow: auto-deploy-on-merge
   bootstrapper_confidence: first-class
@@ -36,7 +36,7 @@ hints:
   has_background_jobs: false
 ```
 
-> A solo developer shipping a mobile-first web MVP in five after-hours weeks, with magic-link login, per-user data isolation and an AI step that turns a free-text dump into at most three items for today, needs an agent-friendly starter that handles auth, database and deploy out of the box. The 10x Astro Starter (Astro, React, TypeScript, Tailwind, Supabase, Cloudflare) is the recommended default for a JavaScript/TypeScript web app, clears all four agent-friendly gates and matches the stack already chosen in the project's decision log. Scaffolding confidence is first-class, so expect mostly smooth setup with occasional manual steps. Auth and AI flags are set; payments and realtime are out of scope. The day reset and 14-day archive can run lazily on first open, so no background jobs are flagged. Deployment uses the starter default, Cloudflare Pages, with GitHub Actions auto-deploying on merge to main.
+> A solo developer shipping a mobile-first web MVP in five after-hours weeks, with magic-link login, per-user data isolation and an AI step that turns a free-text dump into at most three items for today, needs an agent-friendly starter that handles auth, database and deploy out of the box. The 10x Astro Starter (Astro, React, TypeScript, Tailwind, Supabase, Cloudflare) is the recommended default for a JavaScript/TypeScript web app, clears all four agent-friendly gates and matches the stack already chosen in the project's decision log. Scaffolding confidence is first-class, so expect mostly smooth setup with occasional manual steps. Auth and AI flags are set; payments and realtime are out of scope. The day reset and 14-day archive can run lazily on first open, so no background jobs are flagged. Deployment targets Cloudflare Workers (the runtime the starter is configured for), with GitHub Actions auto-deploying on merge to main.
 
 ## Pre-scaffold verification
 
@@ -97,7 +97,7 @@ none
 | path_taken                 | standard     |
 | self_check_answers         | null         |
 | team_size                  | solo         |
-| deployment_target          | cloudflare-pages |
+| deployment_target          | cloudflare-workers |
 | ci_provider                | github-actions |
 | ci_default_flow            | auto-deploy-on-merge |
 | has_auth                   | true         |
@@ -116,3 +116,5 @@ Useful manual steps in the meantime:
 - `git init` (if you have not already) to start your own repo history.
 - Review any `.scaffold` siblings the conflict policy created and decide which version of each file to keep.
 - Address audit findings per your project's risk tolerance — the full breakdown is in this log.
+
+Note: hand-off `deployment_target` corrected from `cloudflare-pages` to `cloudflare-workers` after the run, to match the scaffolded `wrangler.jsonc` and decision D1. Scaffold unaffected.
