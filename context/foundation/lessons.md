@@ -8,3 +8,10 @@
 - **Problem**: Link może zostać „zużyty” przez automaty, np. skanujące pocztę (decyzja D16: skaner zużywał jednorazowy kod magic linku, zanim zrobił to użytkownik).
 - **Rule**: Nigdy nie zmieniaj stanu (logowanie, zapis, usunięcie, zużycie kodu) przy otwarciu adresu (`GET`). Otwarcie linku tylko pokazuje stronę, a akcję wykonuje dopiero `POST` po kliknięciu człowieka.
 - **Applies to**: all
+
+## Nazywaj każdy element interfejsu jego akcją
+
+- **Context**: W każdym elemencie interfejsu.
+- **Problem**: Źle nazwane kroki wprowadzały użytkownika w błąd: cztery razy „Zaloguj się” przy trzech różnych akcjach w przepływie magic linku (PR #8 → #9); po kliknięciu linku w mailu użytkownik nie wiedział, że musi jeszcze potwierdzić. Zauważyła to też Karolina.
+- **Rule**: Zawsze napis na elemencie, niezależnie, czy to jest przycisk, czy nagłówek, etykieta/akcja, ma odpowiadać czynności z historyjki użytkownika i być dla niego czytelny. W jednym przepływie różne akcje nie mogą nosić tej samej nazwy.
+- **Applies to**: all
