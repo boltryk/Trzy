@@ -1,0 +1,49 @@
+---
+import { z } from "astro/zod";
+import Layout from "@/layouts/Layout.astro";
+
+// Tu prowadzi link z maila (supabase/templates/magic_link.html).
+// Strona niczego nie zużywa: kod zużywa dopiero kliknięcie przycisku (POST /api/auth/confirm),
+// bo firmowe skanery poczty otwierają linki, ale nie klikają przycisków (decyzja D16).
+const ConfirmSchema = z.object({
+  token_hash: z.string().min(1),
+  type: z.literal("email"),
+});
+
+const parsed = ConfirmSchema.safeParse({
+  token_hash: Astro.url.searchParams.get("token_hash"),
+  type: Astro.url.searchParams.get("type"),
+});
+---
+
+<Layout title="Zaloguj się do Trzy">
+  <meta slot="head" name="referrer" content="no-referrer" />
+  <meta slot="head" name="robots" content="noindex" />
+  <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+      <h1 class="mb-4 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-2xl font-bold text-transparent">
+        Zaloguj się do Trzy
+      </h1>
+      {parsed.success ? (
+        <form method="POST" action="/api/auth/confirm" class="space-y-4">
+          <input type="hidden" name="token_hash" value={parsed.data.token_hash} />
+          <input type="hidden" name="type" value={parsed.data.type} />
+          <p class="text-sm text-blue-100/80">Kliknij przycisk, żeby dokończyć logowanie.</p>
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-purple-600 px-4 py-2 font-medium text-white transition-colors hover:bg-purple-500"
+          >
+            Zaloguj się
+          </button>
+        </form>
+      ) : (
+        <div class="space-y-4">
+          <p class="text-sm text-blue-100/80">Ten link jest niepełny. Poproś o nowy.</p>
+          <a href="/auth/signin" class="text-purple-300 hover:underline">
+            Wróć do logowania
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>
