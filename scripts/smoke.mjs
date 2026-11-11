@@ -77,7 +77,8 @@ const steps = [
   ],
   ["mailbox has link with token_hash", () => readMagicLink(), { status: 200 }],
   ["confirm page shows button", () => request(`/auth/confirm?token_hash=${tokenHash}&type=email`), { status: 200 }],
-  // D16: opening the link (what mail scanners do) must not consume the code or sign in.
+  // D16: opening the link (what mail scanners do) must not sign in. That it also does not consume the code
+  // is proven by the next step: it sends the same token_hash and must still succeed. Keep the order.
   ["opening link does not sign in", () => request("/dashboard"), { status: 302, location: "/auth/signin" }],
   [
     "confirm button signs in",
