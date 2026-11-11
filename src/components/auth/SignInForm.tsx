@@ -50,8 +50,8 @@ export default function SignInForm({ serverError }: Props) {
 
       <ServerError message={serverError} />
 
-      <SubmitButton pendingText="Wysyłam link…" icon={<Send className="size-4" />}>
-        Wyślij link do logowania
+      <SubmitButton pendingText="Wysyłam…" icon={<Send className="size-4" />}>
+        Wyślij mi link
       </SubmitButton>
     </form>
   );
