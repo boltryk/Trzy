@@ -38,8 +38,8 @@ To wdrożenie Workera (`wrangler deploy`), nie Pages; te komendy w Cloudflare ni
 
 ### B. Bramki ręczne (robi użytkownik; agent podaje dokładne miejsce w panelu)
 
-- [ ] **Cloudflare, subdomena workers.dev:** Workers & Pages → ustawić subdomenę konta (jednorazowo).
-- [ ] **Cloudflare, token API:** My Profile → API Tokens → szablon „Edit Cloudflare Workers”, ograniczony do jednego konta, bez DNS i rozliczeń. Ten sam token:
+- [x] **Cloudflare, subdomena workers.dev:** Workers & Pages → ustawić subdomenę konta (jednorazowo).
+- [x] **Cloudflare, token API:** My Profile → API Tokens → szablon „Edit Cloudflare Workers”, ograniczony do jednego konta, bez DNS i rozliczeń. Ten sam token:
   - podany agentowi przez bezpieczny formularz (host `api.cloudflare.com`),
   - dodany w GitHub → Settings → Secrets → Actions jako `CLOUDFLARE_API_TOKEN`, plus `CLOUDFLARE_ACCOUNT_ID` (identyfikator konta, nie sekret).
 - [ ] **Supabase (po pierwszym wdrożeniu, gdy znamy adres):** Authentication → URL Configuration:
@@ -50,9 +50,9 @@ To wdrożenie Workera (`wrangler deploy`), nie Pages; te komendy w Cloudflare ni
 
 ### C. Pierwsze wdrożenie (agent, z tej sesji)
 
-- [ ] `npx wrangler whoami`: potwierdzenie tokenu i identyfikatora konta.
-- [ ] `npm run build`, potem `npx wrangler deploy` z gałęzi `feat/deploy`; zanotować adres Workera i identyfikator wersji.
-- [ ] Do czasu wpisania sekretów strona pokazuje baner „Supabase nie jest skonfigurowany”; to oczekiwany stan pośredni.
+- [x] `npx wrangler whoami`: potwierdzenie tokenu i identyfikatora konta.
+- [x] `npm run build`, potem `npx wrangler deploy` z gałęzi `feat/deploy`; zanotować adres Workera i identyfikator wersji.
+- [x] Do czasu wpisania sekretów strona pokazuje baner „Supabase nie jest skonfigurowany”; to oczekiwany stan pośredni.
 
 ### D. Weryfikacja na produkcji (po sekretach i konfiguracji Supabase)
 
@@ -75,3 +75,9 @@ To wdrożenie Workera (`wrangler deploy`), nie Pages; te komendy w Cloudflare ni
 ## Poza zakresem
 
 Własna domena, środowisko podglądów dla PR, cron (poranny mail), własny SMTP, tłumaczenie reszty ekranów startera.
+
+## Dziennik wykonania
+
+- 2026-11-17: token API wymagał dodania uprawnień Workers Scripts: Edit, Workers KV Storage: Edit (adapter Astro tworzy KV `SESSION` na sesje) i Account Settings: Read. `wrangler whoami` nie działa z tokenem bez listy kont; wystarcza `CLOUDFLARE_ACCOUNT_ID`.
+- 2026-11-17: subdomena `lukasz-boltryk.workers.dev` utworzona przez otwarcie Workers & Pages w panelu.
+- 2026-11-17: pierwsze wdrożenie z gałęzi `feat/deploy`, wersja `83a33a83-3d21-47a6-8a86-cf3692edfef9`, adres https://trzy.lukasz-boltryk.workers.dev. `/`, `/auth/signin`, `/auth/check-email`: 200; `/dashboard` bez sesji: 302 do `/auth/signin`; baner „Supabase nie jest skonfigurowany” do czasu ustawienia sekretów.
