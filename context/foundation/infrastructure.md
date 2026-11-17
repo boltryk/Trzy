@@ -77,7 +77,8 @@ Decyzja po kontroli: **kontynuacja z Cloudflare Workers, ryzyka odnotowane** (20
 
 ## Operational Story
 
-- **Preview deploys**: do rozstrzygnięcia w planie wdrożenia. Workers Builds buduje podglądy dla gałęzi innych niż `main` (`wrangler preview`); przy wdrażaniu z GitHub Actions podgląd wymaga osobnego kroku (`wrangler versions upload`). Podglądy dostają adres `*.workers.dev`; dostęp do nich nie jest domyślnie chroniony.
+- **Deploys**: produkcję wdraża job `deploy` w `.github/workflows/ci.yml` (`npx wrangler deploy`) po zielonych jobach `ci` i `smoke`, tylko przy push do `main` (decyzja 2026-11-17; Workers Builds odrzucone, bo wdrażałoby niezależnie od wyniku CI). Plan pierwszego wdrożenia: `context/deployment/deploy-plan.md`.
+- **Preview deploys**: na razie brak. Przy GitHub Actions podgląd wymagałby osobnego kroku (`wrangler versions upload`); podglądy dostają adres `*.workers.dev` bez domyślnej ochrony dostępu.
 - **Secrets**: sekrety uruchomieniowe (`SUPABASE_URL`, `SUPABASE_KEY`, później klucz OpenRouter) trzymane na Workerze przez `npx wrangler secret put <NAZWA>` albo w panelu (Variables & Secrets); widzą je osoby z dostępem do konta Cloudflare. Przy GitHub Actions dodatkowo `CLOUDFLARE_API_TOKEN` (ograniczony do Workers jednego konta) i `CLOUDFLARE_ACCOUNT_ID` w sekretach repozytorium. Rotacja: nowa wartość przez `wrangler secret put`, potem unieważnienie starej u dostawcy.
 - **Rollback**: `npx wrangler rollback [version-id]` (ostatnie 100 wersji), działa w kilka sekund; nie cofa sekretów, powiązań ani migracji bazy.
 - **Approval**: człowiek wykonuje: pierwsze utworzenie Workera i wybór planu Paid, nadanie i rotację głównych sekretów, usunięcie Workera lub projektu Supabase, zmiany DNS. Agent może bez nadzoru: build, wdrożenie po zielonym CI, odczyt logów, wycofanie do poprzedniej wersji po zgłoszeniu awarii.
