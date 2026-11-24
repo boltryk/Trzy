@@ -33,6 +33,9 @@ export const POST: APIRoute = async (context) => {
     type: parsed.data.type,
   });
   if (error) {
+    // Tylko kod i status: bez message, e-maila i tokenu (reguła 6, observability w wrangler.jsonc).
+    // eslint-disable-next-line no-console -- celowy log kodu błędu do wrangler tail
+    console.warn("auth.confirm.failed", { code: error.code ?? "unknown", status: error.status });
     return backToSignIn(context, "Link wygasł albo został już użyty. Poproś o nowy.");
   }
 

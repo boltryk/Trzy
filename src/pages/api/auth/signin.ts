@@ -30,6 +30,9 @@ export const POST: APIRoute = async (context) => {
   });
 
   if (error) {
+    // Tylko kod i status: bez message, e-maila i tokenu (reguła 6, observability w wrangler.jsonc).
+    // eslint-disable-next-line no-console -- celowy log kodu błędu do wrangler tail
+    console.warn("auth.signin.failed", { code: error.code ?? "unknown", status: error.status });
     return backToSignIn(context, "Nie udało się wysłać linku. Spróbuj ponownie za chwilę.");
   }
 
