@@ -22,3 +22,10 @@
 - **Problem**: W PR #5 `supabase/setup-cli` z `version: latest` pytało API GitHuba o najnowszą wersję, trafiło na limit zapytań i job `smoke` padł, zanim cokolwiek przetestował. Tego samego dnia wyszła wersja 3.0.0, więc `latest` mogło też bez ostrzeżenia zmienić zachowanie CI.
 - **Rule**: Zawsze wpisuj dokładną wersję narzędzia (np. `2.122.1`) zamiast `latest`; wersję podnoś świadomie, osobnym PR, i sprawdzaj wynik w CI.
 - **Applies to**: plan, implement, impl-review
+
+## Weryfikuj wdrożenie prawdziwym zapytaniem, nie obecnością zmiennej
+
+- **Context**: Każde wdrożenie i każda zmiana sekretów lub konfiguracji (Cloudflare, Supabase, GitHub Actions); każdy kod, który sprawdza „czy skonfigurowane”.
+- **Problem**: Po wdrożeniu `SUPABASE_URL` zawierał `/rest/v1`, więc logowanie szło pod `/rest/v1/auth/v1/otp` (404 w logach Auth). Baner „Supabase nie jest skonfigurowany” zniknął, bo sprawdzał tylko, czy zmienna istnieje, a nie czy działa.
+- **Rule**: Po każdym wdrożeniu lub zmianie sekretu wykonaj jedno prawdziwe zapytanie przez całą ścieżkę (np. wysłanie magic linku) i sprawdź wynik w logach. Obecność zmiennej, zielony build ani brak banera nie są dowodem działania.
+- **Applies to**: plan, implement, impl-review
