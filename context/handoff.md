@@ -6,14 +6,14 @@ Punkt startowy dla nowej sesji agenta. Czytaj razem z `AGENTS.md`, `context/foun
 
 Certyfikacja 6.12.2026 (decyzja D13). Wymagania obowiązkowe: kontrola dostępu, CRUD sensowny dla domeny, logika biznesowa, dokumenty kontekstowe, co najmniej jeden test z perspektywy użytkownika; mile widziany publiczny URL.
 
-| Wymaganie                      | Stan                                                                                             |
-| ------------------------------ | ------------------------------------------------------------------------------------------------ |
-| Kontrola dostępu               | ✅ magic link (FR-001), PR #8, #9                                                                |
-| Dokumenty kontekstowe          | ✅ `prd.md`, `tech-stack.md`, `infrastructure.md`, `lessons.md`, `AGENTS.md`                     |
-| Test z perspektywy użytkownika | ✅ `scripts/smoke.mjs` (12 kroków logowania) w CI                                                |
-| Publiczny URL                  | 🟡 https://trzy.lukasz-boltryk.workers.dev działa, czeka na sekrety Supabase                     |
-| **CRUD sensowny dla domeny**   | ❌ zrzuty i pozycje (FR-003–FR-013)                                                              |
-| **Logika biznesowa**           | ❌ „Uporządkuj”: limit 3, twarde terminy, walidacja `source_text` (reguły 1, 4, 7 w `AGENTS.md`) |
+| Wymaganie                      | Stan                                                                                                 |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Kontrola dostępu               | ✅ magic link (FR-001), PR #8, #9                                                                    |
+| Dokumenty kontekstowe          | ✅ `prd.md`, `tech-stack.md`, `infrastructure.md`, `lessons.md`, `AGENTS.md`                         |
+| Test z perspektywy użytkownika | ✅ `scripts/smoke.mjs` (12 kroków logowania) w CI                                                    |
+| Publiczny URL                  | ✅ https://trzy.lukasz-boltryk.workers.dev, logowanie magic linkiem działa na produkcji (2026-11-24) |
+| **CRUD sensowny dla domeny**   | ❌ zrzuty i pozycje (FR-003–FR-013)                                                                  |
+| **Logika biznesowa**           | ❌ „Uporządkuj”: limit 3, twarde terminy, walidacja `source_text` (reguły 1, 4, 7 w `AGENTS.md`)     |
 
 ## Kurs (lekcje)
 
@@ -26,16 +26,11 @@ Certyfikacja 6.12.2026 (decyzja D13). Wymagania obowiązkowe: kontrola dostępu,
 - **#11** `chore/infrastructure`: `infrastructure.md`. Gotowy do merge'a.
 - **`feat/deploy`** (na #11): nazwa Workera `trzy`, job `deploy` w CI (po `ci` i `smoke`, tylko push do `main`), `context/deployment/deploy-plan.md` z dziennikiem, ten plik. Merge dopiero po ustawieniu sekretów GitHuba, inaczej job `deploy` padnie.
 
-## Co czeka na autora (bramki ręczne)
+## Wdrożenie (stan 2026-11-24)
 
-Szczegóły i dokładne ścieżki w panelach: `context/deployment/deploy-plan.md`, sekcja B.
+Bramki ręczne zrobione: URL i szablony w Supabase, własny SMTP (Gmail; Supabase nie pozwala edytować szablonów bez SMTP), sekrety Workera, sekrety GitHuba (token zrotowany). Logowanie działa na produkcji. Dziennik i pułapki (`SUPABASE_URL` bez `/rest/v1`): `context/deployment/deploy-plan.md`.
 
-1. Supabase → Authentication → URL Configuration: Site URL i Redirect URL `https://trzy.lukasz-boltryk.workers.dev`.
-2. Supabase → Email Templates „Magic Link” i „Confirm signup”: treść z `supabase/templates/magic_link.html`.
-3. Cloudflare → Workers & Pages → `trzy` → Variables and Secrets: `SUPABASE_URL`, `SUPABASE_KEY` (klucz anon/publishable, nigdy `service_role`).
-4. GitHub → Settings → Secrets → Actions: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
-
-Potem agent: weryfikacja produkcji (sekcja D planu), logowanie end-to-end mailem autora, merge `feat/deploy`, kontrola joba `deploy`.
+Zostało: merge #11, potem #12; sprawdzić log pierwszego joba `deploy` na `main`. Token Cloudflare zapisany w środowisku sesji wygasł po rotacji (do `wrangler tail` z sesji trzeba podać nowy przez formularz).
 
 ## Środowisko sesji chmurowej
 
