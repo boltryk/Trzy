@@ -42,11 +42,11 @@ To wdrożenie Workera (`wrangler deploy`), nie Pages; te komendy w Cloudflare ni
 - [x] **Cloudflare, token API:** My Profile → API Tokens → szablon „Edit Cloudflare Workers”, ograniczony do jednego konta, bez DNS i rozliczeń. Ten sam token:
   - podany agentowi przez bezpieczny formularz (host `api.cloudflare.com`),
   - dodany w GitHub → Settings → Secrets → Actions jako `CLOUDFLARE_API_TOKEN`, plus `CLOUDFLARE_ACCOUNT_ID` (identyfikator konta, nie sekret).
-- [ ] **Supabase (po pierwszym wdrożeniu, gdy znamy adres):** Authentication → URL Configuration:
+- [x] **Supabase (po pierwszym wdrożeniu, gdy znamy adres):** Authentication → URL Configuration:
   - Site URL: `https://trzy.<subdomena>.workers.dev`,
   - Redirect URLs: ten sam adres.
-- [ ] **Supabase, szablony maili:** Authentication → Email Templates → „Magic Link” i „Confirm signup”: treść z `supabase/templates/magic_link.html`, temat „Twój link do logowania w Trzy”.
-- [ ] **Sekrety Workera:** Cloudflare → Workers & Pages → `trzy` → Settings → Variables and Secrets: `SUPABASE_URL` (Project URL) i `SUPABASE_KEY` (klucz publiczny anon/publishable, nigdy `service_role`). Wartości wpisuje tylko użytkownik.
+- [x] **Supabase, szablony maili:** Authentication → Email Templates → „Magic Link” i „Confirm signup”: treść z `supabase/templates/magic_link.html`, temat „Twój link do logowania w Trzy”.
+- [x] **Sekrety Workera:** Cloudflare → Workers & Pages → `trzy` → Settings → Variables and Secrets: `SUPABASE_URL` (Project URL) i `SUPABASE_KEY` (klucz publiczny anon/publishable, nigdy `service_role`). Wartości wpisuje tylko użytkownik.
 
 ### C. Pierwsze wdrożenie (agent, z tej sesji)
 
@@ -57,7 +57,7 @@ To wdrożenie Workera (`wrangler deploy`), nie Pages; te komendy w Cloudflare ni
 ### D. Weryfikacja na produkcji (po sekretach i konfiguracji Supabase)
 
 - [ ] `curl` na `/`, `/auth/signin`, `/auth/check-email`: 200; `/dashboard` bez sesji: 302 do `/auth/signin`.
-- [ ] Logowanie end-to-end przez użytkownika: wpisuje swój e-mail na `/auth/signin`, dostaje mail, „Otwórz Trzy” → „Tak, wchodzę” → zalogowany. To jedyny test z prawdziwą skrzynką.
+- [x] Logowanie end-to-end przez użytkownika: wpisuje swój e-mail na `/auth/signin`, dostaje mail, „Otwórz Trzy” → „Tak, wchodzę” → zalogowany. To jedyny test z prawdziwą skrzynką.
 - [ ] `npx wrangler tail trzy` podczas logowania: w logach nie ma e-maili ani treści (reguła 6).
 - [ ] `npx wrangler deployments list`: widać wersję do ewentualnego `npx wrangler rollback`.
 
@@ -81,3 +81,6 @@ Własna domena, środowisko podglądów dla PR, cron (poranny mail), własny SMT
 - 2026-11-17: token API wymagał dodania uprawnień Workers Scripts: Edit, Workers KV Storage: Edit (adapter Astro tworzy KV `SESSION` na sesje) i Account Settings: Read. `wrangler whoami` nie działa z tokenem bez listy kont; wystarcza `CLOUDFLARE_ACCOUNT_ID`.
 - 2026-11-17: subdomena `lukasz-boltryk.workers.dev` utworzona przez otwarcie Workers & Pages w panelu.
 - 2026-11-17: pierwsze wdrożenie z gałęzi `feat/deploy`, wersja `83a33a83-3d21-47a6-8a86-cf3692edfef9`, adres https://trzy.lukasz-boltryk.workers.dev. `/`, `/auth/signin`, `/auth/check-email`: 200; `/dashboard` bez sesji: 302 do `/auth/signin`; baner „Supabase nie jest skonfigurowany” do czasu ustawienia sekretów.
+- 2026-11-24: Supabase blokuje edycję szablonów maili bez własnego SMTP, a domyślny szablon zużywa kod przy otwarciu linku (sprzeczne z D16). Podpięty SMTP Gmaila (hasło aplikacji, `smtp.gmail.com:465`, nadawca „Trzy”); szablon z `supabase/templates/magic_link.html` w „Magic Link” i „Confirm signup”. Przy własnej domenie: przejście na Resend (tylko ustawienia Supabase).
+- 2026-11-24: pierwsze logowanie nie działało: `SUPABASE_URL` zawierał `/rest/v1`, więc zapytania szły pod `/rest/v1/auth/v1/otp` (404 w logach Auth). Poprawne: sam adres projektu `https://<ref>.supabase.co`. Baner „nie skonfigurowany” zniknął mimo złej wartości, bo sprawdza tylko obecność zmiennej.
+- 2026-11-24: logowanie magic linkiem na produkcji działa end-to-end (mail z Gmaila, „Otwórz Trzy” → „Tak, wchodzę” → zalogowany). Token API Cloudflare zrotowany; nowa wartość w sekretach GitHuba.
