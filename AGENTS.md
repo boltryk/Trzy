@@ -16,7 +16,7 @@ Trzy to asystent dnia: „Masz dziś trzy rzeczy. Reszta może poczekać.” Uż
 
 ## Pułapki ze startera
 
-- Logowanie w szkielecie to e-mail + hasło (`src/pages/api/auth/signin.ts`, `signup.ts`). PRD wymaga magic linku (FR-001) — nie rozbudowuj logowania hasłem.
+- Logowanie tylko magic linkiem (FR-001, `src/pages/api/auth/`). Nie dodawaj logowania hasłem ani osobnej rejestracji — szkielet je miał, zostały usunięte (PR #8, #9).
 - `wrangler.jsonc` ma włączone `observability`, więc każdy `console.*` w Workerze trafia do logów Cloudflare. Nigdy nie loguj treści zrzutu, propozycji ani odpowiedzi modelu (reguła 6).
 - Zod importuj z `astro/zod`; `zod` nie jest bezpośrednią zależnością w `package.json`.
 
@@ -33,7 +33,7 @@ Node 26 (`.nvmrc`). `npm run dev` (serwer na :4321), `npm run lint`, `npx astro 
 
 ## Model danych i stack
 
-Model `items` (type oddzielony od bucket, `day_key` z granicą dnia 4:00 Europe/Warsaw): `context/research/idea-brief.md`. Warstwa AI za adapterem `AIProvider` (`OpenRouterProvider`, `MockProvider`); testy nie wołają prawdziwego LLM. Vitest i Playwright nie są jeszcze zainstalowane — dodaj je, zanim napiszesz pierwszy test.
+Model `items` (type oddzielony od bucket, `day_key` z granicą dnia 4:00 Europe/Warsaw): `context/research/idea-brief.md`. Warstwę AI buduj za adapterem `AIProvider` (`OpenRouterProvider`, `MockProvider`) — jeszcze nie istnieje, powstaje z pierwszą funkcją AI; testy nie wołają prawdziwego LLM. Vitest i Playwright nie są jeszcze zainstalowane — dodaj je, zanim napiszesz pierwszy test.
 
 ## Poza zakresem
 
