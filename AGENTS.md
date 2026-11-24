@@ -22,7 +22,7 @@ Trzy to asystent dnia: „Masz dziś trzy rzeczy. Reszta może poczekać.” Uż
 
 ## Komendy
 
-Node 26 (`.nvmrc`). `npm run dev` (serwer na :4321), `npm run lint`, `npx astro check`, `npm run build`, `npm run smoke` (test logowania na działającym serwerze, `BASE_URL`). Lokalny Supabase: `npx supabase start` (Docker). Pozostałe skrypty: `package.json`.
+Node 26 (`.nvmrc`). `npm run dev` (serwer na :4321), `npm run lint`, `npx astro check`, `npm run build`, `npm run smoke` (test logowania na działającym serwerze, `BASE_URL`). Lokalny Supabase: `npx supabase start` (Docker). Produkcja: wdraża job `deploy` w CI po merge’u do `main`; ręcznie `npx wrangler deploy`, logi `npx wrangler tail trzy`. Pozostałe skrypty: `package.json`.
 
 ## Struktura i konwencje
 
