@@ -313,6 +313,7 @@ Jako użytkownik chcę, żeby aplikacja działała bez zasięgu i mogła wysyła
 - Analityka retencji (North Star, W1/W2/W4). W MVP wystarczą metryki na sobie.
 - Moduł ekranu (e-ink, tablet).
 - Zmiana stacku (Astro zostaje, bo to starter kursu).
+- Helper `logSafeError` w `src/lib/`: jeden punkt logowania błędów, który przepuszcza tylko `code` pasujący do `^[a-z0-9_]{1,64}$` (inaczej `"other"`) i `status`. Zrobić przy pierwszym nowym endpoincie z logowaniem (np. „Uporządkuj”), wtedy podpiąć też `signin.ts` i `confirm.ts` (PR #15).
 
 ## Poza zakresem (świadomie nie robimy)
 
